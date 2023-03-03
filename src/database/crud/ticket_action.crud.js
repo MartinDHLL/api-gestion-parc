@@ -1,4 +1,4 @@
-const User = require("../../sequelize").models.user;
+const User = require("../sequelize").models.user;
 
 /**
  * @summary Cette fonction permet de trouver un utilisateur,

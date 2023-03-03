@@ -1,6 +1,6 @@
 const statusMessages = require("../../assets/StatusMessages.json");
 const tokenManagement = require("../../services/token.service");
-const crud = require("../../database/models/User/user.crud");
+const crud = require("../../database/crud/user.crud");
 
 exports.getAccessToken = async (req, res) => {
   const email = req.body.email;
@@ -16,13 +16,5 @@ exports.getAccessToken = async (req, res) => {
   }
   const response = await tokenManagement.generateToken(user);
   res.status(response.statusCode).send(response.token ?? statusMessages[401]);
-  return;
-};
-
-exports.makeUser = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const result = await crud.make(email, password);
-  res.send(result);
   return;
 };

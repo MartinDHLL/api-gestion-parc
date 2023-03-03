@@ -1,8 +1,10 @@
 const { DataTypes } = require("sequelize");
+/* const { Sequelize } = require("sequelize");
+const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
-  const Solution = sequelize.define(
-    "solution",
+  const Issue = sequelize.define(
+    "issue",
     {
       intitule: {
         type: DataTypes.STRING,
@@ -11,7 +13,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
     },
-    { freezeTableName: "solution" }
+    { freezeTableName: "issue" }
   );
-  return Solution;
+  return Issue;
 };

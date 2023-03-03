@@ -1,36 +1,22 @@
-const User = require("../../sequelize").models.user;
-const bcrypt = require("bcrypt");
+const Entreprise = require("../sequelize").models.entreprise;
 
 /**
- * @summary Cette fonction permet de trouver un utilisateur,
+ * @summary Cette fonction permet de trouver une entreprise,
  * @param {string} email username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
  * @param {boolean} token true -> usage token, false -> récupérer les informations. false par défaut
  * @returns
  */
 
-exports.find = async (email, password = null, token = false) => {
-  const user = await User.findOne({ where: { username: email } });
-  if (!user) {
+exports.find = async (email) => {
+  const entreprise = await Entreprise.findOne({ where: { username: email } });
+  if (!entreprise) {
     return null;
   }
 
-  if (token) {
-    const passCheck = await bcrypt.compare(password, user.password);
-    if (!passCheck) {
-      return null;
-    }
-  }
-
-  return token
-    ? { userId: user.id, username: user.username, roles: user.roles }
-    : {
-        id: user.id,
-        username: user.username,
-        nom: user.nom,
-        prenom: user.prenom,
-        roles: user.roles,
-      };
+  return {
+    id: type.id,
+  };
 };
 
 /**
@@ -39,9 +25,9 @@ exports.find = async (email, password = null, token = false) => {
  * @returns
  */
 
-exports.findAllByRole = async (roles) => {
-  const users = await User.findAll({ where: { roles: roles } });
-  if (users) {
+exports.findAll = async () => {
+  const entreprises = await Entreprise.findAll({ where: { roles: roles } });
+  if (!entreprises) {
     return null;
   }
   return users.toJSON();
@@ -54,10 +40,8 @@ exports.findAllByRole = async (roles) => {
  */
 
 exports.make = async (username, password) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await User.create({
+  const type = await Entreprise.create({
     username: username,
-    password: hashedPassword,
   });
   return user.toJSON();
 };
@@ -68,7 +52,7 @@ exports.make = async (username, password) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async();
 
 /**
  * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
@@ -76,7 +60,7 @@ exports.edit = async () => {};
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async();
 
 /**
  * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
@@ -84,4 +68,4 @@ exports.delete = async () => {};
  * @returns
  */
 
-exports.changePassword = async () => {};
+exports.changePassword = async();

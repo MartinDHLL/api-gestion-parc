@@ -12,7 +12,7 @@ const sequelize = new Sequelize({
 
 const db = {
   sequelize: sequelize,
-  models: require("./models/models")(sequelize),
+  models: require("./models")(sequelize),
 };
 
 module.exports = db;

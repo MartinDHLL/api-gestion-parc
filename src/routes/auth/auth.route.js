@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const controllers = require("./auth.controllers");
 
-router.post("/token", controllers.getAccessToken);
+router.post("/", controllers.getAccessToken);
 
 module.exports = router;

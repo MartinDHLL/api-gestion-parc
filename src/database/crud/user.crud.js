@@ -1,4 +1,5 @@
-const User = require("../../sequelize").models.user;
+const User = require("../sequelize").models.user;
+const bcrypt = require("bcrypt");
 
 /**
  * @summary Cette fonction permet de trouver un utilisateur,
@@ -8,15 +9,28 @@ const User = require("../../sequelize").models.user;
  * @returns
  */
 
-exports.find = async (email) => {
-  const type = await User.findOne({ where: { username: email } });
+exports.find = async (email, password = null, token = false) => {
+  const user = await User.findOne({ where: { username: email } });
   if (!user) {
     return null;
   }
 
-  return {
-    id: type.id,
-  };
+  if (token) {
+    const passCheck = await bcrypt.compare(password, user.password);
+    if (!passCheck) {
+      return null;
+    }
+  }
+
+  return token
+    ? { userId: user.id, username: user.username, roles: user.roles }
+    : {
+        id: user.id,
+        username: user.username,
+        nom: user.nom,
+        prenom: user.prenom,
+        roles: user.roles,
+      };
 };
 
 /**
@@ -25,8 +39,8 @@ exports.find = async (email) => {
  * @returns
  */
 
-exports.findAll = async () => {
-  const types = await User.findAll({ where: { roles: roles } });
+exports.findAllByRole = async (roles) => {
+  const users = await User.findAll({ where: { roles: roles } });
   if (users) {
     return null;
   }
@@ -40,8 +54,10 @@ exports.findAll = async () => {
  */
 
 exports.make = async (username, password) => {
-  const type = await User.create({
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await User.create({
     username: username,
+    password: hashedPassword,
   });
   return user.toJSON();
 };
@@ -52,7 +68,7 @@ exports.make = async (username, password) => {
  * @returns
  */
 
-exports.edit = async();
+exports.edit = async () => {};
 
 /**
  * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
@@ -60,7 +76,7 @@ exports.edit = async();
  * @returns
  */
 
-exports.delete = async();
+exports.delete = async () => {};
 
 /**
  * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
@@ -68,4 +84,4 @@ exports.delete = async();
  * @returns
  */
 
-exports.changePassword = async();
+exports.changePassword = async () => {};

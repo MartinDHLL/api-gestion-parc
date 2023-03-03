@@ -1,7 +1,7 @@
-const Entreprise = require("../../sequelize").models.entreprise;
+const User = require("../sequelize").models.user;
 
 /**
- * @summary Cette fonction permet de trouver une entreprise,
+ * @summary Cette fonction permet de trouver un utilisateur,
  * @param {string} email username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
  * @param {boolean} token true -> usage token, false -> récupérer les informations. false par défaut
@@ -9,8 +9,8 @@ const Entreprise = require("../../sequelize").models.entreprise;
  */
 
 exports.find = async (email) => {
-  const entreprise = await Entreprise.findOne({ where: { username: email } });
-  if (!entreprise) {
+  const type = await User.findOne({ where: { username: email } });
+  if (!user) {
     return null;
   }
 
@@ -26,8 +26,8 @@ exports.find = async (email) => {
  */
 
 exports.findAll = async () => {
-  const entreprises = await Entreprise.findAll({ where: { roles: roles } });
-  if (!entreprises) {
+  const types = await User.findAll({ where: { roles: roles } });
+  if (users) {
     return null;
   }
   return users.toJSON();
@@ -40,7 +40,7 @@ exports.findAll = async () => {
  */
 
 exports.make = async (username, password) => {
-  const type = await Entreprise.create({
+  const type = await User.create({
     username: username,
   });
   return user.toJSON();
