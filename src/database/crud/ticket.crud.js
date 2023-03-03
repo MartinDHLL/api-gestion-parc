@@ -1,71 +1,57 @@
-const User = require("../sequelize").models.user;
+const Ticket = require("../sequelize").models.ticket;
 
 /**
- * @summary Cette fonction permet de trouver un utilisateur,
- * @param {string} email username de type email
- * @param {string} password null par défaut, sert pour l'authentification quand token = true
- * @param {boolean} token true -> usage token, false -> récupérer les informations. false par défaut
+ * @summary Trouver une entreprise,
  * @returns
  */
 
-exports.find = async (email) => {
-  const type = await User.findOne({ where: { username: email } });
-  if (!user) {
+exports.find = async (id) => {
+  const entreprise = await Entreprise.findOne({ where: { id: id } });
+  if (!entreprise) {
     return null;
   }
 
-  return {
-    id: type.id,
-  };
+  return entreprise.toJSON();
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
- * @param {array} roles définit les rôles lors de la recherche
+ * @summary Trouver toutes les entreprises
  * @returns
  */
 
 exports.findAll = async () => {
-  const types = await User.findAll({ where: { roles: roles } });
-  if (users) {
+  const entreprises = await Entreprise.findAll();
+  if (entreprises) {
     return null;
   }
-  return users.toJSON();
+  return entreprises.toJSON();
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
- * @param {array} roles définit les rôles lors de la recherche
+ * @summary Créer une entreprise
  * @returns
  */
 
-exports.make = async (username, password) => {
-  const type = await User.create({
-    username: username,
+exports.make = async (email) => {
+  const entreprise = await Entreprise.create({
+    email: email,
   });
-  return user.toJSON();
+  if (!entreprise) {
+    return null;
+  }
+  return entreprise.toJSON();
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
- * @param {array} roles définit les rôles lors de la recherche
+ * @summary Modifier les données d'une entreprise
  * @returns
  */
 
-exports.edit = async();
+exports.edit = async () => {};
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
- * @param {array} roles définit les rôles lors de la recherche
+ * @summary Supprimer une entreprise
  * @returns
  */
 
-exports.delete = async();
-
-/**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
- * @param {array} roles définit les rôles lors de la recherche
- * @returns
- */
-
-exports.changePassword = async();
+exports.delete = async () => {};

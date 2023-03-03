@@ -2,15 +2,23 @@ const User = require("../sequelize").models.user;
 const bcrypt = require("bcrypt");
 
 /**
- * @summary Cette fonction permet de trouver un utilisateur,
+ * @summary Trouver un utilisateur ou obtenir les informations d'accès d'un utilisateur,
+ * @param {number} id identifiant de l'utilisateur
  * @param {string} email username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
  * @param {boolean} usageToken true -> usage token, false -> récupérer les informations. false par défaut
  * @returns
  */
 
-exports.find = async (email, password = null, usageToken = false) => {
-  const user = await User.findOne({ where: { username: email } });
+exports.find = async (
+  id = null,
+  email = null,
+  password = null,
+  usageToken = false
+) => {
+  const user = id
+    ? await User.findByPk(id)
+    : await User.findOne({ where: { username: email } });
   if (!user) {
     return null;
   }
@@ -20,21 +28,20 @@ exports.find = async (email, password = null, usageToken = false) => {
     if (!passCheck) {
       return null;
     }
+    return { userId: user.id, username: user.username, roles: user.roles };
   }
 
-  return usageToken
-    ? { userId: user.id, username: user.username, roles: user.roles }
-    : {
-        id: user.id,
-        username: user.username,
-        nom: user.nom,
-        prenom: user.prenom,
-        roles: user.roles,
-      };
+  return {
+    id: user.id,
+    username: user.username,
+    nom: user.nom,
+    prenom: user.prenom,
+    roles: user.roles,
+  };
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
+ * @summary Trouver tous les utilisateurs selon des rôles
  * @param {array} roles définit les rôles lors de la recherche
  * @returns
  */
@@ -48,7 +55,7 @@ exports.findAllByRole = async (roles) => {
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
+ * @summary Créer un utilisateur
  * @param {array} roles définit les rôles lors de la recherche
  * @returns
  */
@@ -59,11 +66,14 @@ exports.make = async (username, password) => {
     username: username,
     password: hashedPassword,
   });
+  if (!user) {
+    return null;
+  }
   return user.toJSON();
 };
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
+ * @summary Modifier les données d'un utilisateur
  * @param {array} roles définit les rôles lors de la recherche
  * @returns
  */
@@ -71,7 +81,7 @@ exports.make = async (username, password) => {
 exports.edit = async () => {};
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
+ * @summary Supprimer un utilisateur
  * @param {array} roles définit les rôles lors de la recherche
  * @returns
  */
@@ -79,7 +89,7 @@ exports.edit = async () => {};
 exports.delete = async () => {};
 
 /**
- * @summary Cette fonction permet de trouver tous les utilisateurs selon les rôles donné
+ * @summary Changer le mot de passe d'un utilisateur
  * @param {array} roles définit les rôles lors de la recherche
  * @returns
  */
