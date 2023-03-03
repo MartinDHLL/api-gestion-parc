@@ -1,56 +1,56 @@
 const Ticket = require("../sequelize").models.ticket;
 
 /**
- * @summary Trouver une entreprise,
+ * @summary Trouver une ticket,
  * @returns
  */
 
 exports.find = async (id) => {
-  const entreprise = await Entreprise.findOne({ where: { id: id } });
-  if (!entreprise) {
+  const ticket = await Ticket.findOne({ where: { id: id } });
+  if (!ticket) {
     return null;
   }
 
-  return entreprise.toJSON();
+  return ticket.toJSON();
 };
 
 /**
- * @summary Trouver toutes les entreprises
+ * @summary Trouver toutes les tickets
  * @returns
  */
 
 exports.findAll = async () => {
-  const entreprises = await Entreprise.findAll();
-  if (entreprises) {
+  const tickets = await Ticket.findAll();
+  if (tickets) {
     return null;
   }
-  return entreprises.toJSON();
+  return tickets.toJSON();
 };
 
 /**
- * @summary Créer une entreprise
+ * @summary Créer une ticket
  * @returns
  */
 
 exports.make = async (email) => {
-  const entreprise = await Entreprise.create({
+  const ticket = await Ticket.create({
     email: email,
   });
-  if (!entreprise) {
+  if (!ticket) {
     return null;
   }
-  return entreprise.toJSON();
+  return ticket.toJSON();
 };
 
 /**
- * @summary Modifier les données d'une entreprise
+ * @summary Modifier les données d'une ticket
  * @returns
  */
 
 exports.edit = async () => {};
 
 /**
- * @summary Supprimer une entreprise
+ * @summary Supprimer une ticket
  * @returns
  */
 

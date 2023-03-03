@@ -1,56 +1,56 @@
 const Statut = require("../sequelize").models.statut;
 
 /**
- * @summary Trouver une entreprise,
+ * @summary Trouver une statut,
  * @returns
  */
 
 exports.find = async (id) => {
-  const entreprise = await Entreprise.findOne({ where: { id: id } });
-  if (!entreprise) {
+  const statut = await Statut.findOne({ where: { id: id } });
+  if (!statut) {
     return null;
   }
 
-  return entreprise.toJSON();
+  return statut.toJSON();
 };
 
 /**
- * @summary Trouver toutes les entreprises
+ * @summary Trouver toutes les statuts
  * @returns
  */
 
 exports.findAll = async () => {
-  const entreprises = await Entreprise.findAll();
-  if (entreprises) {
+  const statuts = await Statut.findAll();
+  if (statuts) {
     return null;
   }
-  return entreprises.toJSON();
+  return statuts.toJSON();
 };
 
 /**
- * @summary Créer une entreprise
+ * @summary Créer une statut
  * @returns
  */
 
 exports.make = async (email) => {
-  const entreprise = await Entreprise.create({
+  const statut = await Statut.create({
     email: email,
   });
-  if (!entreprise) {
+  if (!statut) {
     return null;
   }
-  return entreprise.toJSON();
+  return statut.toJSON();
 };
 
 /**
- * @summary Modifier les données d'une entreprise
+ * @summary Modifier les données d'une statut
  * @returns
  */
 
 exports.edit = async () => {};
 
 /**
- * @summary Supprimer une entreprise
+ * @summary Supprimer une statut
  * @returns
  */
 

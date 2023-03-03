@@ -1,56 +1,56 @@
 const Hardware = require("../sequelize").models.hardware;
 
 /**
- * @summary Trouver une entreprise,
+ * @summary Trouver une hardware,
  * @returns
  */
 
 exports.find = async (id) => {
-  const entreprise = await Entreprise.findOne({ where: { id: id } });
-  if (!entreprise) {
+  const hardware = await Hardware.findOne({ where: { id: id } });
+  if (!hardware) {
     return null;
   }
 
-  return entreprise.toJSON();
+  return hardware.toJSON();
 };
 
 /**
- * @summary Trouver toutes les entreprises
+ * @summary Trouver toutes les hardwares
  * @returns
  */
 
 exports.findAll = async () => {
-  const entreprises = await Entreprise.findAll();
-  if (entreprises) {
+  const hardwares = await Hardware.findAll();
+  if (hardwares) {
     return null;
   }
-  return entreprises.toJSON();
+  return hardwares.toJSON();
 };
 
 /**
- * @summary Créer une entreprise
+ * @summary Créer une hardware
  * @returns
  */
 
 exports.make = async (email) => {
-  const entreprise = await Entreprise.create({
+  const hardware = await Hardware.create({
     email: email,
   });
-  if (!entreprise) {
+  if (!hardware) {
     return null;
   }
-  return entreprise.toJSON();
+  return hardware.toJSON();
 };
 
 /**
- * @summary Modifier les données d'une entreprise
+ * @summary Modifier les données d'une hardware
  * @returns
  */
 
 exports.edit = async () => {};
 
 /**
- * @summary Supprimer une entreprise
+ * @summary Supprimer une hardware
  * @returns
  */
 

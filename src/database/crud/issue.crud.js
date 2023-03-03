@@ -1,56 +1,56 @@
 const Issue = require("../sequelize").models.issue;
 
 /**
- * @summary Trouver une entreprise,
+ * @summary Trouver une issue,
  * @returns
  */
 
 exports.find = async (id) => {
-  const entreprise = await Entreprise.findOne({ where: { id: id } });
-  if (!entreprise) {
+  const issue = await Issue.findOne({ where: { id: id } });
+  if (!issue) {
     return null;
   }
 
-  return entreprise.toJSON();
+  return issue.toJSON();
 };
 
 /**
- * @summary Trouver toutes les entreprises
+ * @summary Trouver toutes les issues
  * @returns
  */
 
 exports.findAll = async () => {
-  const entreprises = await Entreprise.findAll();
-  if (entreprises) {
+  const issues = await Issue.findAll();
+  if (issues) {
     return null;
   }
-  return entreprises.toJSON();
+  return issues.toJSON();
 };
 
 /**
- * @summary Créer une entreprise
+ * @summary Créer une issue
  * @returns
  */
 
 exports.make = async (email) => {
-  const entreprise = await Entreprise.create({
+  const issue = await Issue.create({
     email: email,
   });
-  if (!entreprise) {
+  if (!issue) {
     return null;
   }
-  return entreprise.toJSON();
+  return issue.toJSON();
 };
 
 /**
- * @summary Modifier les données d'une entreprise
+ * @summary Modifier les données d'une issue
  * @returns
  */
 
 exports.edit = async () => {};
 
 /**
- * @summary Supprimer une entreprise
+ * @summary Supprimer une issue
  * @returns
  */
 
