@@ -5,24 +5,24 @@ const bcrypt = require("bcrypt");
  * @summary Cette fonction permet de trouver un utilisateur,
  * @param {string} email username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
- * @param {boolean} token true -> usage token, false -> récupérer les informations. false par défaut
+ * @param {boolean} usageToken true -> usage token, false -> récupérer les informations. false par défaut
  * @returns
  */
 
-exports.find = async (email, password = null, token = false) => {
+exports.find = async (email, password = null, usageToken = false) => {
   const user = await User.findOne({ where: { username: email } });
   if (!user) {
     return null;
   }
 
-  if (token) {
+  if (usageToken) {
     const passCheck = await bcrypt.compare(password, user.password);
     if (!passCheck) {
       return null;
     }
   }
 
-  return token
+  return usageToken
     ? { userId: user.id, username: user.username, roles: user.roles }
     : {
         id: user.id,

@@ -1,15 +1,13 @@
 const statusMessages = require("../../assets/StatusMessages.json");
-const tokenManagement = require("../../services/token.service");
 const crud = require("../../database/crud/user.crud");
 
-exports.getAccessToken = async (req, res) => {
+exports.getUser = async (req, res) => {
   const email = req.body.email;
-  const password = req.body.password;
-  if (!email || !password) {
+  if (!email) {
     res.status(400).send(statusMessages[400]);
     return;
   }
-  const user = await crud.find(email, password, true);
+  const user = await crud.find(email);
   if (!user) {
     res.status(401).send(statusMessages[401]);
     return;
