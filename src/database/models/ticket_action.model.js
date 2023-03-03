@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-/* const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
   const TicketAction = sequelize.define(
@@ -21,8 +19,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "ticket_action" }
   );
-  TicketAction.belongsTo(require("./user.model")(sequelize));
-  TicketAction.hasOne(require("./statut.model")(sequelize));
-  TicketAction.hasOne(require("./issue.model")(sequelize));
   return TicketAction;
 };

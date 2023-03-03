@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-/* const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
   const Hardware = sequelize.define(
@@ -17,8 +15,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "hardware" }
   );
-  Hardware.belongsTo(require("./entreprise.model")(sequelize));
-  Hardware.belongsTo(require("./type.model")(sequelize));
-  Hardware.hasMany(require("./ticket.model")(sequelize));
   return Hardware;
 };

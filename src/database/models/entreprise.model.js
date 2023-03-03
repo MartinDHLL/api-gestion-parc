@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-/* const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
   const Entreprise = sequelize.define(
@@ -13,6 +11,7 @@ module.exports = (sequelize) => {
       },
       nom: {
         type: DataTypes.STRING,
+        unique: true,
       },
       prenom: {
         type: DataTypes.STRING,
@@ -32,6 +31,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "entreprise" }
   );
-  Entreprise.hasMany(require("./hardware.model")(sequelize));
   return Entreprise;
 };

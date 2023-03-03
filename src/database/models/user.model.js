@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-// const { Sequelize } = require("sequelize");
-// const sequelize = new Sequelize();
 
 module.exports = (sequelize) => {
   const User = sequelize.define(
@@ -26,6 +24,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "user" }
   );
-  User.hasMany(require("./ticket_action.model")(sequelize));
   return User;
 };

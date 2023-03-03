@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-/* const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
   const Ticket = sequelize.define(
@@ -18,9 +16,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "ticket" }
   );
-  Ticket.belongsTo(require("./hardware.model")(sequelize));
-  Ticket.hasMany(require("./ticket_action.model")(sequelize), {
-    foreignKey: { allowNull: false },
-  });
   return Ticket;
 };

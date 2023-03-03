@@ -1,6 +1,4 @@
 const { DataTypes } = require("sequelize");
-/* const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(); */
 
 module.exports = (sequelize) => {
   const Solution = sequelize.define(
@@ -15,6 +13,5 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "solution" }
   );
-  Solution.BelongsTo(require("./issue.model")(sequelize));
   return Solution;
 };

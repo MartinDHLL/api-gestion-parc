@@ -7,6 +7,7 @@ app.use(express.json());
 
 require("./src/routes/routes")(app);
 
+// synchronisation automatique des modèles avec la base de données
 db.sequelize.sync();
 
 app.listen(config.port, (error) => {
