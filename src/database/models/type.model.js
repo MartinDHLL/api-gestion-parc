@@ -15,5 +15,7 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "type" }
   );
+  Type.hasMany(require("./hardware.model")(sequelize));
+  Type.hasMany(require("./issue.model")(sequelize));
   return Type;
 };

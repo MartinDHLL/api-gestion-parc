@@ -18,5 +18,9 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "ticket" }
   );
+  Ticket.belongsTo(require("./hardware.model")(sequelize));
+  Ticket.hasMany(require("./ticket_action.model")(sequelize), {
+    foreignKey: { allowNull: false },
+  });
   return Ticket;
 };

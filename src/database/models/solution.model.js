@@ -15,5 +15,6 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "solution" }
   );
+  Solution.BelongsTo(require("./issue.model")(sequelize));
   return Solution;
 };

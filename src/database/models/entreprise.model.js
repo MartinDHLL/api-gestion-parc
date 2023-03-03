@@ -32,5 +32,6 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "entreprise" }
   );
+  Entreprise.hasMany(require("./hardware.model")(sequelize));
   return Entreprise;
 };

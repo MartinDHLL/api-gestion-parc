@@ -21,6 +21,8 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "ticket_action" }
   );
-  TicketAction.belongsTo(require("./user.model", { as: "user_id" })(sequelize));
+  TicketAction.belongsTo(require("./user.model")(sequelize));
+  TicketAction.hasOne(require("./statut.model")(sequelize));
+  TicketAction.hasOne(require("./issue.model")(sequelize));
   return TicketAction;
 };

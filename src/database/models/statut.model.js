@@ -16,5 +16,6 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "statut" }
   );
+  Statut.belongsToMany(require("./ticket_action.model")(sequelize));
   return Statut;
 };

@@ -15,5 +15,8 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "issue" }
   );
+  Issue.belongsToMany(require("./ticket_action.model")(sequelize));
+  Issue.belongsTo(require("./type.model")(sequelize));
+  Issue.hasMany(require("./solution.model")(sequelize));
   return Issue;
 };

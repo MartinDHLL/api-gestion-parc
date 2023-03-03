@@ -17,5 +17,8 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "hardware" }
   );
+  Hardware.belongsTo(require("./entreprise.model")(sequelize));
+  Hardware.belongsTo(require("./type.model")(sequelize));
+  Hardware.hasMany(require("./ticket.model")(sequelize));
   return Hardware;
 };

@@ -26,5 +26,6 @@ module.exports = (sequelize) => {
     },
     { freezeTableName: "user" }
   );
+  User.hasMany(require("./ticket_action.model")(sequelize));
   return User;
 };
