@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 
 /**
  * @summary Trouver un utilisateur ou obtenir les informations d'accès d'un utilisateur,
- * @param {number} id identifiant de l'utilisateur
- * @param {string} email username de type email
+ * @param {number} id null par défaut, identifiant de l'utilisateur
+ * @param {string} email null par défaut, username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
  * @param {boolean} usageToken true -> usage token, false -> récupérer les informations. false par défaut
  * @returns
@@ -28,9 +28,11 @@ exports.find = async (
     if (!passCheck) {
       return null;
     }
+    // retourne les informations de l'utilisateur pour le token
     return { userId: user.id, username: user.username, roles: user.roles };
   }
 
+  // retourne les informations de l'utilisateur
   return {
     id: user.id,
     username: user.username,
