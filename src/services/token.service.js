@@ -19,6 +19,18 @@ const generateToken = async (user) => {
   return token;
 };
 
-const verifyToken = async () => {};
+/**
+ *
+ * @param {*} user Verifie le token et en renvoie un nouveau si le token est correct
+ * @returns Objet JSON contenant un token et un statut
+ */
+
+// à finir
+const verifyToken = async (oldToken, user) => {
+  if (!token || !jwt.verify(oldToken, config.secret)) {
+    return token;
+  }
+  return (token.token = generateToken(user));
+};
 
 module.exports = { generateToken };

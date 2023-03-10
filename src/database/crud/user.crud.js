@@ -7,32 +7,29 @@ const bcrypt = require("bcrypt");
  * @param {string} email null par défaut, username de type email
  * @param {string} password null par défaut, sert pour l'authentification quand token = true
  * @param {boolean} usageToken true -> usage token, false -> récupérer les informations. false par défaut
- * @returns
+ * @returns {JSON} un utilisateur
  */
 
 exports.find = async (
   id = null,
   email = null,
   password = null,
+  roles = null,
   usageToken = false
 ) => {
   const user = id
     ? await User.findByPk(id)
-    : await User.findOne({ where: { username: email } });
-  if (!user) {
-    return null;
-  }
+    : await User.findOne({ where: { username: email, roles: roles } });
 
+  if (!user) return null;
   if (usageToken) {
     const passCheck = await bcrypt.compare(password, user.password);
-    if (!passCheck) {
-      return null;
-    }
+    if (!passCheck) return null;
     // retourne les informations de l'utilisateur pour le token
     return { userId: user.id, username: user.username, roles: user.roles };
   }
 
-  // retourne les informations de l'utilisateur
+  // retourne les informations de l'utilisateur pour une utilisation standard
   return {
     id: user.id,
     username: user.username,
@@ -40,26 +37,25 @@ exports.find = async (
     prenom: user.prenom,
     roles: user.roles,
   };
-};
+}; // ! fonction à refaire en plusieurs fonctions car trop compliqué à lire et à maintenir !
 
 /**
  * @summary Trouver tous les utilisateurs selon des rôles
  * @param {array} roles définit les rôles lors de la recherche
- * @returns
+ * @returns {JSON} un utilisateur
  */
 
 exports.findAllByRole = async (roles) => {
   const users = await User.findAll({ where: { roles: roles } });
-  if (users) {
-    return null;
-  }
+  if (users) return null;
   return users.toJSON();
 };
 
 /**
  * @summary Créer un utilisateur
- * @param {array} roles définit les rôles lors de la recherche
- * @returns
+ * @param {string} username adresse email de l'utilisateur
+ * @param {string} password mot de passe de l'utilisateur
+ * @returns {JSON} un utilisateur
  */
 
 exports.make = async (username, password) => {
@@ -68,19 +64,22 @@ exports.make = async (username, password) => {
     username: username,
     password: hashedPassword,
   });
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
   return user.toJSON();
 };
 
 /**
  * @summary Modifier les données d'un utilisateur
  * @param {array} roles définit les rôles lors de la recherche
- * @returns
+ * @returns {JSON} un utilisateur
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, data, roleAllowed) => {
+  const user = await User.findByPk(id);
+  if (!user || !user.includes(roleAllowed)) return null;
+  user.update(data);
+  return user.toJSON();
+};
 
 /**
  * @summary Supprimer un utilisateur
