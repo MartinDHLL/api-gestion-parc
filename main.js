@@ -1,9 +1,11 @@
 const { config } = require("./src/configs/app.config");
+const helmet = require("helmet");
 const express = require("express");
 const db = require("./src/database/sequelize");
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
 
 require("./src/routes/routes")(app);
 
