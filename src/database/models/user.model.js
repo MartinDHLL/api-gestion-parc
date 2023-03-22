@@ -7,19 +7,24 @@ module.exports = (sequelize) => {
       username: {
         type: DataTypes.STRING,
         validate: { isEmail: true },
+        allowNull: false,
         unique: true,
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       nom: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       prenom: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       roles: {
         type: DataTypes.JSON,
+        allowNull: false,
       },
     },
     { freezeTableName: "user" }

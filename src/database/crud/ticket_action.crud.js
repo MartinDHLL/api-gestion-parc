@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const ticketAction = await TicketAction.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const ticketAction = await TicketAction.create(info);
   if (!ticketAction) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const ticketAction = await TicketAction.update(info, {
+    where: {id},
+  });
+  if (!ticketAction) {
+    return null;
+  }
+  return ticketAction.toJSON();
+};
 
 /**
  * @summary Supprimer une ticketAction
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const ticketAction = await TicketAction.destroy({
+    where: {id},
+  });
+  if (!ticketAction) {
+    return null;
+  }
+  return ticketAction.toJSON();
+};

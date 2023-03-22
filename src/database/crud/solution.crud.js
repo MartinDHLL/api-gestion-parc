@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const solution = await Solution.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const solution = await Solution.create(info);
   if (!solution) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const solution = await Solution.update(info, {
+    where: {id},
+  });
+  if (!solution) {
+    return null;
+  }
+  return solution.toJSON();
+};
 
 /**
  * @summary Supprimer une solution
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const solution = await Solution.destroy({
+    where: {id},
+  });
+  if (!solution) {
+    return null;
+  }
+  return solution.toJSON();
+};

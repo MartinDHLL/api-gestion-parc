@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const entreprise = await Entreprise.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const entreprise = await Entreprise.create(info);
   if (!entreprise) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const entreprise = await Entreprise.update(info, {
+      where: {id},
+  });
+  if(!entreprise){
+    return null;
+  }
+  return entreprise.toJSON();
+};
 
 /**
  * @summary Supprimer une entreprise
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const entreprise = await Entreprise.destroy({
+    where: {id},
+  });
+  if (!entreprise) {
+    return null;
+  }
+  return entreprise.toJSON();
+};

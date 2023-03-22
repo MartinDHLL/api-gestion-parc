@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const hardware = await Hardware.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const hardware = await Hardware.create(info);
   if (!hardware) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const hardware = await Hardware.update(info, {
+    where: {id},
+  });
+  if(!hardware){
+    return null;
+  }
+  return hardware.toJSON();
+};
 
 /**
  * @summary Supprimer une hardware
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const hardware = await Hardware.destroy({
+    where: {id},
+  });
+  if (!hardware) {
+    return null;
+  }
+  return hardware.toJSON();
+};

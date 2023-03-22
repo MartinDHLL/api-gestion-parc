@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const statut = await Statut.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const statut = await Statut.create(info);
   if (!statut) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const statut = await Statut.update(info, {
+    where: {id},
+  });
+  if (!statut) {
+    return null;
+  }
+  return statut.toJSON();
+};
 
 /**
  * @summary Supprimer une statut
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const statut = await Statut.destroy({
+    where: {id},
+  });
+  if (!statut) {
+    return null;
+  }
+  return statut.toJSON();
+};

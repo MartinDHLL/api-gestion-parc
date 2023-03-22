@@ -32,10 +32,8 @@ exports.findAll = async () => {
  * @returns
  */
 
-exports.make = async (email) => {
-  const type = await Type.create({
-    email: email,
-  });
+exports.make = async (info) => {
+  const type = await Type.create(info);
   if (!type) {
     return null;
   }
@@ -47,11 +45,27 @@ exports.make = async (email) => {
  * @returns
  */
 
-exports.edit = async () => {};
+exports.edit = async (id, info) => {
+  const type = await Type.update(info, {
+    where: {id},
+  });
+  if (!type) {
+    return null;
+  }
+  return type.toJSON();
+};
 
 /**
  * @summary Supprimer une type
  * @returns
  */
 
-exports.delete = async () => {};
+exports.delete = async (id) => {
+  const type = await Type.destroy({
+    where: {id},
+  });
+  if (!type) {
+    return null;
+  }
+  return type.toJSON();
+};

@@ -7,10 +7,12 @@ module.exports = (sequelize) => {
       libelle: {
         type: DataTypes.STRING,
         validate: { isEmail: true },
+        allowNull: false,
         unique: true,
       },
       serial_num: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     { freezeTableName: "hardware" }

@@ -6,10 +6,12 @@ module.exports = (sequelize) => {
     {
       code: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         unique: true,
       },
       type: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     { freezeTableName: "statut" }
